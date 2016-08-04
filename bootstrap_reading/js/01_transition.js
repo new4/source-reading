@@ -62,7 +62,7 @@
 		return this
 	}
 
-	// 文件加载后即执行
+	// 以下部分代码在文件加载后即执行
 	$(function () {
 		// 检测特性，全局赋值，$.support.transition = { end ：事件名称 }
 		$.support.transition = transitionEnd()
@@ -70,12 +70,13 @@
 		// 不支持过渡的结束事件
 		if (!$.support.transition) return
 
-		// 注册一个事件, 事件名称定义为 bsTransitionEnd
+		// 在 jQuery 中注册一个事件, 事件名称定义为 bsTransitionEnd
 		$.event.special.bsTransitionEnd = {
 			bindType     : $.support.transition.end,
 			delegateType : $.support.transition.end,
 			handle       : function (e) {
                       if ($(e.target).is(this))
+                        // 执行事件处理对象 handleObj 上注册的处理函数 handler
                         return e.handleObj.handler.apply(this, arguments)
                     }
 		}
