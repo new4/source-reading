@@ -19,6 +19,30 @@
 - tab
 - affix
 
+## 插件总体结构
+
+Bootstrap 中所有的插件都具有一致的结构：
+
+```javascript
++function(){
+  // CLASS DEFINITION
+  // ======================
+
+  // ALERT PLUGIN DEFINITION
+  // =======================
+
+  // ALERT NO CONFLICT
+  // =================
+
+  // ALERT DATA-API
+  // ==============
+
+
+}(jQuery);
+```
+
+
+
 ## 过渡效果 transition
 ---
 
