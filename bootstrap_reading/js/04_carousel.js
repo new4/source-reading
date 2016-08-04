@@ -6,12 +6,13 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
+// 轮播
 +function ($) {
   'use strict';
 
   // CAROUSEL CLASS DEFINITION
   // =========================
+  // carousel 插件类定义
 
   var Carousel = function (element, options) {
     this.$element    = $(element)
@@ -30,10 +31,13 @@
       .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
   }
 
+  // 版本号
   Carousel.VERSION  = '3.3.5'
 
+  // 过渡时间
   Carousel.TRANSITION_DURATION = 600
 
+  // 默认配置
   Carousel.DEFAULTS = {
     interval: 5000,
     pause: 'hover',
@@ -41,6 +45,7 @@
     keyboard: true
   }
 
+  // 原型方法 keydown
   Carousel.prototype.keydown = function (e) {
     if (/input|textarea/i.test(e.target.tagName)) return
     switch (e.which) {
@@ -172,9 +177,11 @@
 
   // CAROUSEL PLUGIN DEFINITION
   // ==========================
+  //  carousel 的插件定义，即 carousel 的 js 函数用法
 
   function Plugin(option) {
     return this.each(function () {
+      // 调用插件 carousel 的元素
       var $this   = $(this)
       var data    = $this.data('bs.carousel')
       var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == 'object' && option)
@@ -187,15 +194,18 @@
     })
   }
 
+  // 保存 $.fn 中可能已经存在了的 carousel 插件方法
   var old = $.fn.carousel
 
+  // 将插件注册到 $.fn 中去
   $.fn.carousel             = Plugin
+  // 通过 Constructor 属性暴露了其原始的构造函数
   $.fn.carousel.Constructor = Carousel
 
 
   // CAROUSEL NO CONFLICT
   // ====================
-
+  // 防冲突处理
   $.fn.carousel.noConflict = function () {
     $.fn.carousel = old
     return this
@@ -204,6 +214,7 @@
 
   // CAROUSEL DATA-API
   // =================
+  // data-api 用法（纯 HTML）
 
   var clickHandler = function (e) {
     var href
@@ -223,13 +234,19 @@
     e.preventDefault()
   }
 
+  // 事件代理
   $(document)
+    // 在含有属性 data-slide 的元素上绑定 click 事件的处理函数 clickHandler
     .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
+    // 在含有属性 data-slide-to 的元素上绑定 click 事件的处理函数 clickHandler
     .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
 
+  // 监听 load 事件
   $(window).on('load', function () {
+    // 对每一个含有属性 data-ride="carousel" 的元素生成一个轮播对象实例
     $('[data-ride="carousel"]').each(function () {
       var $carousel = $(this)
+      // 实例化插件，并且传入元素上的 data- 数据作为生成实例时的参数
       Plugin.call($carousel, $carousel.data())
     })
   })

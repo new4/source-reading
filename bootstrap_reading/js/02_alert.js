@@ -139,7 +139,7 @@
 
   // ALERT DATA-API
   // ==============
-  // HTML 用法
+  // data-api 用法（纯 HTML）
 
   // 事件代理
   // 为声明式的元素（含有自定义属性 data-dismiss="alert" 的元素）绑定 click 事件
