@@ -65,6 +65,8 @@
     // 这个事件是关闭之前触发
     $parent.trigger(e = $.Event('close.bs.alert'))
 
+    // e 在上面被重新赋值了，现在代表的是 close 事件
+    // 可以在元素响应 close 事件的处理函数中阻止警告框的关闭
     if (e.isDefaultPrevented()) return
 
     // 移除类 .in
@@ -121,6 +123,7 @@
 
   // 将插件注册到 $.fn 中去
   $.fn.alert             = Plugin
+  // 通过 Constructor 属性暴露了其原始的构造函数
   $.fn.alert.Constructor = Alert
 
 
