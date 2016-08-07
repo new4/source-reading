@@ -131,20 +131,30 @@
     return false
   }
 
+  // 原型方法 keydown
   Dropdown.prototype.keydown = function (e) {
-    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
+    // 若键盘按键不是 up arrow(38) down arrow(40) esc(27) spacebar(32) 这四者
+    if (!/(38|40|27|32)/.test(e.which) ||
+    // 或者是文本输入框 input/textarea 上的键盘按键事件，直接返回不予处理
+        /input|textarea/i.test(e.target.tagName)) return
 
     var $this = $(this)
-
+    // 阻止默认行为
     e.preventDefault()
+    // 阻止冒泡
     e.stopPropagation()
 
+    // 元素上有禁用标识，直接返回
     if ($this.is('.disabled, :disabled')) return
 
     var $parent  = getParent($this)
+    // 下拉菜单是否展开的标识
     var isActive = $parent.hasClass('open')
 
+    // 下拉菜单没有展开且不是 esc 退出（展开的时候按 esc 会导致菜单收起）
+    // 或者, 下拉菜单展开了且按键是 esc
     if (!isActive && e.which != 27 || isActive && e.which == 27) {
+      //
       if (e.which == 27) $parent.find(toggle).trigger('focus')
       return $this.trigger('click')
     }
@@ -158,33 +168,41 @@
 
     if (e.which == 38 && index > 0)                 index--         // up
     if (e.which == 40 && index < $items.length - 1) index++         // down
-    if (!~index)                                    index = 0
+    if (!~index)                                    index = 0       // 异常
 
+    // 第 index 个下拉菜单项获得焦点
     $items.eq(index).trigger('focus')
   }
 
 
   // DROPDOWN PLUGIN DEFINITION
   // ==========================
+  // dropdown 的插件定义，即 dropdown 的 js 函数用法
 
   function Plugin(option) {
     return this.each(function () {
       var $this = $(this)
+      // 获取元素上绑定的实例
       var data  = $this.data('bs.dropdown')
-
+      // 没有实例就自己实例化一个兵进行绑定
       if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
+      // 传入的参数是字符串的话就调用同名的原型方法
       if (typeof option == 'string') data[option].call($this)
     })
   }
 
+  // 保存 $.fn 中可能已经存在了的 dropdown 插件方法
   var old = $.fn.dropdown
 
+  // 将插件注册到 $.fn 中去
   $.fn.dropdown             = Plugin
+  // 通过 Constructor 属性暴露了其原始的构造函数
   $.fn.dropdown.Constructor = Dropdown
 
 
   // DROPDOWN NO CONFLICT
   // ====================
+  // 防冲突处理
 
   $.fn.dropdown.noConflict = function () {
     $.fn.dropdown = old
@@ -194,6 +212,7 @@
 
   // APPLY TO STANDARD DROPDOWN ELEMENTS
   // ===================================
+  // data-api 用法（纯 HTML）
 
   $(document)
     .on('click.bs.dropdown.data-api', clearMenus)
