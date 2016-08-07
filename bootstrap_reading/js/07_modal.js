@@ -6,12 +6,13 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
+// 模态框
 +function ($) {
   'use strict';
 
   // MODAL CLASS DEFINITION
   // ======================
+  // Modal 模态框的类定义
 
   var Modal = function (element, options) {
     this.options             = options
@@ -33,9 +34,11 @@
     }
   }
 
+  // 版本号
   Modal.VERSION  = '3.3.5'
-
+  // 过渡间隔
   Modal.TRANSITION_DURATION = 300
+  // 背景的过渡间隔
   Modal.BACKDROP_TRANSITION_DURATION = 150
 
   Modal.DEFAULTS = {
@@ -44,10 +47,12 @@
     show: true
   }
 
+  // 原型方法 toggle
   Modal.prototype.toggle = function (_relatedTarget) {
     return this.isShown ? this.hide() : this.show(_relatedTarget)
   }
 
+  // 原型方法 show , 显示模态框
   Modal.prototype.show = function (_relatedTarget) {
     var that = this
     var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
@@ -106,6 +111,7 @@
     })
   }
 
+  // 原型方法 hide , 隐藏模态框
   Modal.prototype.hide = function (e) {
     if (e) e.preventDefault()
 
@@ -136,6 +142,7 @@
       this.hideModal()
   }
 
+  // 原型方法 enforceFocus ,
   Modal.prototype.enforceFocus = function () {
     $(document)
       .off('focusin.bs.modal') // guard against infinite focus loop
@@ -146,6 +153,7 @@
       }, this))
   }
 
+  // 原型方法 escape ,
   Modal.prototype.escape = function () {
     if (this.isShown && this.options.keyboard) {
       this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
@@ -156,6 +164,7 @@
     }
   }
 
+  // 原型方法 resize ,
   Modal.prototype.resize = function () {
     if (this.isShown) {
       $(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this))
@@ -286,6 +295,7 @@
 
   // MODAL PLUGIN DEFINITION
   // =======================
+  // modal 的插件定义，即 modal 的 js 函数用法
 
   function Plugin(option, _relatedTarget) {
     return this.each(function () {
@@ -299,14 +309,18 @@
     })
   }
 
+  // 保存 $.fn 中可能已经存在了的 modal 插件方法
   var old = $.fn.modal
 
+  // 将插件注册到 $.fn 中去
   $.fn.modal             = Plugin
+  // 通过 Constructor 属性暴露了其原始的构造函数
   $.fn.modal.Constructor = Modal
 
 
   // MODAL NO CONFLICT
   // =================
+  // 防冲突处理
 
   $.fn.modal.noConflict = function () {
     $.fn.modal = old
@@ -316,6 +330,7 @@
 
   // MODAL DATA-API
   // ==============
+  // data-api 用法（纯 HTML）
 
   $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
     var $this   = $(this)
