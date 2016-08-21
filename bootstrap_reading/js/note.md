@@ -28,22 +28,18 @@ Bootstrap 中所有的插件都具有一致的结构：
   // CLASS DEFINITION
   // ======================
   // 插件的类定义，包括静态属性方法以及原型方法
-  // blabla...
 
   // PLUGIN DEFINITION
   // =======================
   // 插件定义，插件会被注册到 $.fn 中去
-  // blabla...
 
   // NO CONFLICT
   // =================
   // 插件的防冲突处理
-  // blabla...
 
   // DATA-API
   // ==============
   // data-api 用法（纯 HTML）
-  // blabla...
 
 }(jQuery);
 ```
